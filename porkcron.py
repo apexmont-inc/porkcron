@@ -90,7 +90,7 @@ def main() -> None:
                 if backup_path is not None:
                     file_name = private_key_path.name
                     backup_file_path=Path(backup_path, folder_timestamp, file_name)
-                    logging.info(f"backing up certificate to {backup_file_path}")
+                    logging.info(f"backing up private key to {backup_file_path}")
                     backup_file_path.parent.mkdir(parents=True, exist_ok=True)
                     private_key_path.copy(backup_file_path, preserve_metadata=True)
 
@@ -99,7 +99,7 @@ def main() -> None:
             private_key_path.parent.mkdir(parents=True, exist_ok=True)
             private_key_path.write_text(private_key)
 
-        if not certificate_matches or private_key_matches:
+        if not (certificate_matches and private_key_matches):
             logging.info(f"SSL certificate for {domain} has been renewed")
         else:
             logging.info(f"No SSL certificate updates for {domain} have been detected")
